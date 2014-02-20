@@ -7,6 +7,14 @@ describe APN::Connection do
     end
   end
 
+  describe ".connection_pool" do
+    pending
+  end
+
+  describe ".with_connection" do
+    pending
+  end
+
   describe ".certificate_path" do
 
     context "when changing the root" do

@@ -33,12 +33,6 @@ describe APN do
 
         APN.notify_sync(token, payload, cert_path: 'foo', password: 'bar')
       end
-      it "passes the notification to a client configured for the intended application" do
-        pending "implementation via tests on with_connection and find_connection_pool unless inefficient"
-        @pools
-
-
-      end
     end
   end
 end
