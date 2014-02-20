@@ -1,17 +1,18 @@
 module APN
   module Connection
 
-    def connection_pool
-      @pool ||= ConnectionPool.new(size: (pool_size || 1), timeout: (pool_timeout || 5)) do
+    def connection_pool(app_options={})
+      @pools ||= {}
+      @pools[app_options[:cert_path]] ||= ConnectionPool.new(size: (pool_size || 1), timeout: (pool_timeout || 5)) do
         APN::Client.new(host: host,
                         port: port,
-                        certificate: certificate,
-                        password: password)
+                        certificate: app_options[:app_cert_path] || certificate,
+                        password: app_options[:app_password] || password)
       end
     end
 
-    def with_connection(&block)
-      connection_pool.with(&block)
+    def with_connection(app_options={}, &block)
+      connection_pool(app_options).with(&block)
     end
 
     # pool config

@@ -13,14 +13,32 @@ describe APN do
 
   describe ".notify_sync" do
 
-    it "sends the client a notification" do
-      APN.stub(:connection_pool).and_return(ConnectionPool.new(size: 1, timeout: 5){ client })
+    context "with a single application" do
 
-      client.should_receive(:push) do |message|
-        message.should.eql? notification
+      it "sends the client a notification" do
+        APN.stub(:connection_pool).and_return(ConnectionPool.new(size: 1, timeout: 5){ client })
+
+        client.should_receive(:push) do |message|
+          message.should.eql? notification
+        end
+
+        APN.notify_sync(token, payload)
       end
+    end
 
-      APN.notify_sync(token, payload)
+    context "with multiple applications" do
+
+      it "passes application options to with_connection proxy" do
+        APN.should_receive(:with_connection).with({cert_path: 'foo', password: 'bar'})
+
+        APN.notify_sync(token, payload, cert_path: 'foo', password: 'bar')
+      end
+      it "passes the notification to a client configured for the intended application" do
+        pending "implementation via tests on with_connection and find_connection_pool unless inefficient"
+        @pools
+
+
+      end
     end
   end
 end
