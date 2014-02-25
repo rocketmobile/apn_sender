@@ -6,7 +6,7 @@ module APN
     class Simple
       def notify(token, opts, app_options={})
         Thread.new do
-          APN.notify_sync(token, opts, app_options={})
+          APN.notify_sync(token, opts, app_options)
         end
       end
     end
