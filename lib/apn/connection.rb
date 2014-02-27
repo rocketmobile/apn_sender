@@ -5,8 +5,8 @@ module APN
       @pools ||= {}
       @pools[app_options[:app_cert_path]] ||= ConnectionPool.new(size: (pool_size || 1), timeout: (pool_timeout || 5)) do
         cert = File.read(app_options[:app_cert_path])
-        APN::Client.new(host: host,
-                        port: port,
+        APN::Client.new(host: app_options[:host],
+                        port: app_options[:port],
                         certificate: cert || certificate,
                         password: app_options[:app_password] || password)
       end
