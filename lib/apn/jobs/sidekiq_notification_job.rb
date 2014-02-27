@@ -9,7 +9,7 @@ module APN::Jobs
 
     # Build a notification from arguments and send to Apple
     def perform(token, opts, app_options={})
-      APN.notify_sync(token, opts, app_options={})
+      APN.notify_sync(token, opts, app_options)
     end
   end
 end
