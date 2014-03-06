@@ -8,8 +8,8 @@ module APN::Jobs
     @queue = QUEUE_NAME
 
     # Build a notification from arguments and send to Apple
-    def perform(token, opts, app_options={})
-      APN.notify_sync(token, opts, app_options)
+    def perform(token, payload_opts={}, app_options={})
+      APN.notify_sync(token, payload_opts, app_options)
     end
   end
 end

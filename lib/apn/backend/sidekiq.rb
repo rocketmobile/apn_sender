@@ -9,8 +9,8 @@ end
 module APN
   module Backend
     class Sidekiq
-      def notify(token, opts, app_options={})
-        ::Sidekiq::Client.enqueue(APN::Jobs::SidekiqNotificationJob, token, opts, app_options)
+      def notify(token, payload_opts={}, app_options)
+        ::Sidekiq::Client.enqueue(APN::Jobs::SidekiqNotificationJob, token, payload_opts, app_options)
       end
     end
   end
