@@ -12,18 +12,18 @@ module APN
   class << self
     include APN::Connection
 
-    def notify_async(token, opts = {})
+    def notify_async(token, opts = {}, app_options={})
       token = token.to_s.gsub(/\W/, '')
-      backend.notify(token, opts)
+      backend.notify(token, opts, app_options)
     end
 
-    def notify_sync(token, opts)
+    def notify_sync(token, payload_opts, app_options={})
       token = token.to_s.gsub(/\W/, '')
-      msg = APN::Notification.new(token, opts)
-      raise "Invalid notification options (did you provide :alert, :badge, or :sound?): #{opts.inspect}" unless msg.valid?
+      msg = APN::Notification.new(token, payload_opts)
+      raise "Invalid notification options (did you provide :alert, :badge, or :sound?): #{payload_opts.inspect}" unless msg.valid?
 
-      APN.log(:debug, "Sending to token '#{token}' message '#{opts.to_s}'")
-      APN.with_connection do |client|
+      APN.log(:debug, "Sending to token '#{token}' message '#{payload_opts.to_s}'")
+      APN.with_connection(app_options) do |client|
         client.push(msg)
       end
     end
