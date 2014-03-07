@@ -14,7 +14,7 @@ module APN
 
     def notify_async(token, opts = {}, app_options={})
       token = token.to_s.gsub(/\W/, '')
-      backend.notify(token, opts, app_options={})
+      backend.notify(token, opts, app_options)
     end
 
     def notify_sync(token, payload_opts, app_options={})
