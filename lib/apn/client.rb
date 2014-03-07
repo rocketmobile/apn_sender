@@ -1,7 +1,10 @@
 module APN
   class Client
 
+    DEFAULTS = {port: 2195, host: "gateway.push.apple.com"}
+
     def initialize(options = {})
+      options = DEFAULTS.merge options.reject{|k,v| v.nil?}
       @apn_cert, @cert_pass = options[:certificate], options[:password]
       @host, @port = options[:host], options[:port]
       self
